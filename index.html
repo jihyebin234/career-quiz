@@ -896,6 +896,17 @@
       els.nextBtn.disabled = false;
     }
 
+    function showAnswer() {
+      if (state.current >= state.activeQuestions.length) return;
+      els.answerBox.classList.add("show");
+      if (state.mode !== "type" || state.answered) return;
+      const item = state.activeQuestions[state.current];
+      mark(false, item);
+      els.feedback.textContent = "답을 확인해서 오답 노트에 저장했습니다.";
+      els.feedback.className = "feedback wrong";
+      els.nextBtn.disabled = false;
+    }
+
     function mark(correct, item) {
       if (state.answered) return;
       state.answered = true;
@@ -996,7 +1007,7 @@
       renderWrongList();
       if (state.unit === "wrong") buildQuiz();
     });
-    els.showBtn.addEventListener("click", () => els.answerBox.classList.add("show"));
+    els.showBtn.addEventListener("click", showAnswer);
     els.knowBtn.addEventListener("click", () => markFlash(true));
     els.dontKnowBtn.addEventListener("click", () => markFlash(false));
     els.nextBtn.addEventListener("click", nextQuestion);
